@@ -135,8 +135,9 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-app.js";
         import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-auth.js";
-        import { getDatabase, ref, onValue, update, get } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-database.js";
+        import { getDatabase, ref, onValue, update } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-database.js";
 
+        // আপনার Firebase কনফিগ
         const firebaseConfig = {
             apiKey: "AIzaSyD-U5wOhyMDsiFf7NB4-twMFNnoWCXVXpE",
             authDomain: "login-52331.firebaseapp.com",
@@ -154,74 +155,63 @@
         onAuthStateChanged(auth, (user) => {
             if (user) {
                 const userRef = ref(db, 'users/' + user.uid);
+                
                 onValue(userRef, (snap) => {
                     const data = snap.val();
                     if(data) {
+                        // নাম এবং ইউআইডি সেট করা
                         document.getElementById('userName').innerText = data.name || "Player";
-                        document.getElementById('userUID').innerText = data.serial ? data.serial.toString().padStart(5, '0') : user.uid.substring(0,6).toUpperCase();
                         
-                        let currentBalance = data.balance || 0;
+                        if(data.serial){
+                            document.getElementById('userUID').innerText = data.serial.toString().padStart(5, '0');
+                        } else {
+                            document.getElementById('userUID').innerText = user.uid.substring(0,6).toUpperCase();
+                        }
 
-                        // --- Welcome Bonus Logic (100 TK) ---
+                        // ব্যালেন্স হ্যান্ডলিং
+                        let currentBalance = data.balance !== undefined ? parseFloat(data.balance) : 0;
+
+                        // --- প্রথমবার লগইন বোনাস লজিক (১০০ টাকা) ---
                         if (data.firstLoginBonus !== true) {
                             const bonusAmount = 100;
+                            const finalBalance = currentBalance + bonusAmount;
+
+                            // ডাটাবেসে আপডেট করা হচ্ছে যাতে আর বোনাস না পায়
                             update(userRef, { 
-                                balance: currentBalance + bonusAmount,
+                                balance: finalBalance,
                                 firstLoginBonus: true 
                             }).then(() => {
-                                alert("🎉 Welcome! 100 TK Signup Bonus added.");
+                                console.log("Success: Welcome Bonus 100 TK added!");
                             });
                         } else {
+                            // বোনাস না থাকলে শুধু বর্তমান ব্যালেন্স দেখাবে
                             document.getElementById('balance').innerText = currentBalance.toFixed(2);
                         }
                     }
                 });
             } else {
+                // লগইন না থাকলে লগইন পেজে পাঠিয়ে দেবে
                 window.location.href = "login.html";
             }
         });
 
-        // --- স্মার্ট রিডিম সিস্টেম (অ্যাডমিন প্যানেল কানেক্টেড) ---
-        document.getElementById('claimBtn').onclick = async () => {
-            const codeInput = document.getElementById('giftInp').value.trim().toUpperCase();
+        // গিফট ক্লেইম লজিক
+        document.getElementById('claimBtn').onclick = () => {
+            const code = document.getElementById('giftInp').value.trim();
             const user = auth.currentUser;
-
-            if (!user || !codeInput) {
-                alert("Please enter a valid code!");
-                return;
-            }
-
-            const codeRef = ref(db, 'redeemCodes/' + codeInput);
-            const codeSnap = await get(codeRef);
-
-            if (codeSnap.exists()) {
-                const codeData = codeSnap.val();
-
-                if (codeData.users && codeData.users[user.uid]) {
-                    alert("You have already used this code!");
-                    return;
-                }
-
-                if (codeData.usedCount >= codeData.limit) {
-                    alert("Redeem limit reached for this code!");
-                    return;
-                }
-
+            
+            if (user && code === "NST50") {
                 const userRef = ref(db, 'users/' + user.uid);
-                const userSnap = await get(userRef);
-                const currentBalance = userSnap.val().balance || 0;
-
-                await update(userRef, { balance: currentBalance + codeData.amount });
-
-                await update(codeRef, {
-                    usedCount: (codeData.usedCount || 0) + 1,
-                    [`users/${user.uid}`]: true
+                const currentBalance = parseFloat(document.getElementById('balance').innerText);
+                
+                update(userRef, { balance: currentBalance + 50 }).then(() => {
+                    alert("🎉 Success! 50 TK Added to your account.");
+                    document.getElementById('giftInp').value = "";
                 });
-
-                alert(`🎉 Success! ৳${codeData.amount} added to your account.`);
-                document.getElementById('giftInp').value = "";
+            } else if(code === "") {
+                alert("Please enter a code!");
             } else {
-                alert("Invalid Gift Code!");
+                alert("Invalid or Expired Gift Code!");
             }
         };
 
