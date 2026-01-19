@@ -159,7 +159,21 @@
                     if(data) {
                         document.getElementById('userName').innerText = data.name || "Player";
                         document.getElementById('userUID').innerText = data.serial ? data.serial.toString().padStart(5, '0') : user.uid.substring(0,6).toUpperCase();
-                        document.getElementById('balance').innerText = (data.balance || 0).toFixed(2);
+                        
+                        let currentBalance = data.balance || 0;
+
+                        // --- Welcome Bonus Logic (100 TK) ---
+                        if (data.firstLoginBonus !== true) {
+                            const bonusAmount = 100;
+                            update(userRef, { 
+                                balance: currentBalance + bonusAmount,
+                                firstLoginBonus: true 
+                            }).then(() => {
+                                alert("🎉 Welcome! 100 TK Signup Bonus added.");
+                            });
+                        } else {
+                            document.getElementById('balance').innerText = currentBalance.toFixed(2);
+                        }
                     }
                 });
             } else {
@@ -183,26 +197,22 @@
             if (codeSnap.exists()) {
                 const codeData = codeSnap.val();
 
-                // ১. চেক: ইউজার আগে ব্যবহার করেছে কি না
                 if (codeData.users && codeData.users[user.uid]) {
                     alert("You have already used this code!");
                     return;
                 }
 
-                // ২. চেক: লিমিট শেষ কি না
                 if (codeData.usedCount >= codeData.limit) {
                     alert("Redeem limit reached for this code!");
                     return;
                 }
 
-                // ৩. ব্যালেন্স আপডেট
                 const userRef = ref(db, 'users/' + user.uid);
                 const userSnap = await get(userRef);
                 const currentBalance = userSnap.val().balance || 0;
 
                 await update(userRef, { balance: currentBalance + codeData.amount });
 
-                // ৪. কোড ডাটা আপডেট (Used Count + User ID)
                 await update(codeRef, {
                     usedCount: (codeData.usedCount || 0) + 1,
                     [`users/${user.uid}`]: true
