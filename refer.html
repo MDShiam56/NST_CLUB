@@ -15,7 +15,7 @@
         .income-badge { background: rgba(0, 0, 0, 0.4); padding: 20px; border-radius: 20px; border: 1px solid #8a2be2; margin-bottom: 25px; }
         .income-badge h1 { font-family: 'Orbitron'; font-size: 36px; color: #00ffee; text-shadow: 0 0 15px #00ffee; }
         
-        .link-box { background: #000; padding: 15px; border-radius: 12px; font-size: 11px; color: #00ff88; border: 1px dashed #00ff88; margin-bottom: 20px; word-break: break-all; }
+        .link-box { background: #000; padding: 15px; border-radius: 12px; font-size: 11px; color: #00ff88; border: 1px dashed #00ff88; margin-bottom: 20px; word-break: break-all; cursor: pointer; }
         
         .btn { width: 100%; padding: 16px; border: none; border-radius: 50px; background: linear-gradient(45deg, #8a2be2, #00ffee); color: #fff; font-family: 'Orbitron'; font-weight: 900; cursor: pointer; transition: 0.3s; }
         .btn:hover { transform: scale(1.03); box-shadow: 0 0 20px #8a2be2; }
@@ -32,7 +32,7 @@
             <h1 id="totalIncome">৳ 0.00</h1>
         </div>
         <p style="font-size:15px; margin-bottom:20px;">Invite friends & get <b>৳২০</b> instantly!</p>
-        <div class="link-box" id="myLink">Loading...</div>
+        <div class="link-box" id="myLink">Loading link...</div>
         <button class="btn" onclick="copy()">COPY & SHARE</button>
     </div>
 
@@ -57,22 +57,40 @@
 
         onAuthStateChanged(auth, (user) => {
             if (user) {
-                // লিঙ্কটি ক্লিকেবল করার জন্য প্রোটোকল চেক
-                let base = window.location.origin;
-                if (!base.includes("http")) base = "https://" + window.location.hostname;
-                const fullLink = base + "/signup.html?ref=" + user.uid;
+                // প্লেইন টেক্সট লিঙ্কের পরিবর্তে অটোমেটিক ফুল লিঙ্ক জেনারেশন
+                let currentUrl = window.location.href;
+                let baseUrl = currentUrl.substring(0, currentUrl.lastIndexOf('/'));
+                const fullLink = baseUrl + "/signup.html?ref=" + user.uid;
                 
                 document.getElementById('myLink').innerText = fullLink;
+
                 onValue(ref(db, 'users/' + user.uid), (snap) => {
-                    if (snap.exists()) document.getElementById('totalIncome').innerText = "৳ " + (snap.val().totalCommission || 0);
+                    if (snap.exists()) {
+                        const data = snap.val();
+                        document.getElementById('totalIncome').innerText = "৳ " + (data.totalCommission || 0).toFixed(2);
+                    }
                 });
-            } else { window.location.href = "login.html"; }
+            } else { 
+                window.location.href = "login.html"; 
+            }
         });
 
         window.copy = () => {
-            const t = document.getElementById('myLink').innerText;
-            navigator.clipboard.writeText(t);
-            alert("Link Copied! Share it on Telegram/Messenger.");
+            const linkText = document.getElementById('myLink').innerText;
+            if (linkText === "Loading link...") return;
+            
+            navigator.clipboard.writeText(linkText).then(() => {
+                alert("Link Copied Successfully!\n\n" + linkText);
+            }).catch(err => {
+                // ব্রাউজার সাপোর্ট না করলে অল্টারনেটিভ কপি মেথড
+                const el = document.createElement('textarea');
+                el.value = linkText;
+                document.body.appendChild(el);
+                el.select();
+                document.execCommand('copy');
+                document.body.removeChild(el);
+                alert("Link Copied!");
+            });
         };
     </script>
 </body>
