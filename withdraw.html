@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Withdraw - N S T CLUB PRO</title>
+    
+    <script src="https://pl28544750.effectivegatecpm.com/b8/0a/e0/b80ae00f014f59f727a4b94dc3a193eb.js"></script>
+
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap');
         
@@ -60,6 +63,14 @@
         .btn-withdraw:active { transform: scale(0.97); }
 
         .back-btn { text-decoration: none; color: #1dcc70; font-size: 14px; margin-bottom: 15px; display: block; align-self: flex-start; }
+        
+        /* অ্যাড স্পেসের জন্য ছোট স্টাইল */
+        .ad-container {
+            width: 100%;
+            text-align: center;
+            margin-bottom: 15px;
+            min-height: 50px;
+        }
     </style>
 </head>
 <body>
@@ -68,6 +79,11 @@
         <a href="index.html" class="back-btn">← Back to Dashboard</a>
 
         <div class="card">
+            
+            <div class="ad-container">
+                 <p style="font-size: 10px; color: #555; margin: 0;">Sponsored Ad</p>
+                 </div>
+
             <h2>Withdraw</h2>
             
             <div class="balance-view">
@@ -144,11 +160,9 @@
             btn.innerText = "Processing...";
 
             try {
-                // ১. ইউজার ব্যালেন্স কাটুন
                 const newBalance = userBalance - amount;
                 await update(ref(db, 'users/' + user.uid), { balance: newBalance });
 
-                // ২. এডমিন প্যানেলের জন্য ডাটা পাঠান
                 const withdrawRef = ref(db, 'withdrawRequests');
                 const newReqRef = push(withdrawRef);
                 await set(newReqRef, {
@@ -161,7 +175,7 @@
                     timestamp: new Date().toLocaleString()
                 });
 
-                alert("উইথড্র রিকোয়েস্ট সফল হয়েছে! ২৪ ঘণ্টার মধ্যে পেমেন্ট পাবেন।");
+                alert("উইথড্র রিকোয়েস্ট সফল হয়েছে! ২৪ ঘণ্টার মধ্যে পেমেন্ট পাবেন।");
                 window.location.href = "index.html";
 
             } catch (error) {
