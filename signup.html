@@ -6,6 +6,7 @@
     <title>Sign Up - NST CLUB</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Rajdhani:wght@500;700&display=swap');
+        
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
         body { 
@@ -15,7 +16,6 @@
             align-items: center; 
             background: #020a05; 
             font-family: 'Rajdhani', sans-serif; 
-            padding-bottom: 60px; /* অ্যাডের জন্য নিচে জায়গা রাখা হয়েছে */
         }
 
         .signup-container { 
@@ -28,9 +28,18 @@
         }
 
         h2 { font-family: 'Orbitron'; color: #00ff88; font-size: 28px; margin-bottom: 25px; text-shadow: 0 0 10px #00ff88; }
+        
         .input-field { width: 100%; margin-bottom: 15px; }
-        .input-field input { width: 100%; padding: 15px; background: #111; border: 1px solid #222; border-radius: 12px; color: #fff; font-size: 16px; outline: none; }
-        .input-field input:focus { border-color: #00ff88; box-shadow: 0 0 10px rgba(0, 255, 136, 0.3); }
+        
+        .input-field input { 
+            width: 100%; padding: 15px; background: #111; 
+            border: 1px solid #222; border-radius: 12px; 
+            color: #fff; font-size: 16px; outline: none; 
+        }
+        
+        .input-field input:focus { 
+            border-color: #00ff88; box-shadow: 0 0 10px rgba(0, 255, 136, 0.3); 
+        }
 
         .signup-btn { 
             width: 100%; padding: 15px; 
@@ -39,24 +48,13 @@
             color: #000; font-weight: 900; 
             font-family: 'Orbitron'; cursor: pointer; transition: 0.4s; 
         }
+        
         .signup-btn:hover { transform: scale(1.03); box-shadow: 0 0 20px #00ff88; }
+        
         .footer { margin-top: 20px; color: #777; font-size: 14px; }
+        
         .footer a { color: #00ff88; text-decoration: none; font-weight: bold; }
 
-        /* ব্যানার অ্যাড স্টিকি কন্টেইনার */
-        .ad-sticky-bottom {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 50px;
-            background: rgba(0, 0, 0, 0.8);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-            border-top: 1px solid #00ff88;
-        }
     </style>
 </head>
 <body>
@@ -70,24 +68,12 @@
         <div class="footer">Member already? <a href="login.html">Login</a></div>
     </div>
 
-    <div class="ad-sticky-bottom">
-        <script type="text/javascript">
-            atOptions = {
-                'key' : 'c403443c624d3a0e64d71e89cd90306b',
-                'format' : 'iframe',
-                'height' : 50,
-                'width' : 320,
-                'params' : {}
-            };
-        </script>
-        <script type="text/javascript" src="https://www.highperformanceformat.com/c403443c624d3a0e64d71e89cd90306b/invoke.js"></script>
-    </div>
-
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-app.js";
         import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-auth.js";
         import { getDatabase, ref, set, get, update } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-database.js";
 
+        // Firebase Configuration
         const firebaseConfig = {
             apiKey: "AIzaSyD-U5wOhyMDsiFf7NB4-twMFNnoWCXVXpE",
             authDomain: "login-52331.firebaseapp.com",
@@ -114,6 +100,7 @@
                     const userCred = await createUserWithEmailAndPassword(auth, email, pass);
                     const user = userCred.user;
 
+                    // Save user data to Realtime Database
                     await set(ref(db, 'users/' + user.uid), {
                         name: name,
                         email: email,
@@ -123,6 +110,7 @@
                         referCount: 0
                     });
 
+                    // Handle Referral Logic
                     if (refID && refID !== "none") {
                         const refUserPath = ref(db, 'users/' + refID);
                         const snap = await get(refUserPath);
@@ -136,10 +124,13 @@
                     }
                     alert("Account Created Successfully!");
                     window.location.href = "index.html";
-                } catch (e) { alert(e.message); }
-            } else { alert("Please fill all fields!"); }
+                } catch (e) { 
+                    alert(e.message); 
+                }
+            } else { 
+                alert("Please fill all fields!"); 
+            }
         };
     </script>
-    <script src="https://pl28544750.effectivegatecpm.com/b8/0a/e0/b80ae00f014f59f727a4b94dc3a193eb.js"></script>
 </body>
 </html>
