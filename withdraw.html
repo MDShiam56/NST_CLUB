@@ -6,7 +6,7 @@
     <title>Withdraw - N S T CLUB PRO</title>
     
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&family=Orbitron:wght@700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap');
         
         body { 
             font-family: 'Poppins', sans-serif; 
@@ -32,7 +32,7 @@
             margin-top: 20px;
         }
 
-        h2 { color: #1dcc70; text-align: center; margin-bottom: 25px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; font-family: 'Orbitron'; }
+        h2 { color: #1dcc70; text-align: center; margin-bottom: 25px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
         
         .balance-view { 
             background: linear-gradient(135deg, rgba(29, 204, 112, 0.1), rgba(29, 204, 112, 0.05)); 
@@ -56,7 +56,6 @@
             color: white; border: none; padding: 16px; border-radius: 10px; 
             font-weight: bold; font-size: 17px; cursor: pointer; 
             transition: 0.3s; box-shadow: 0 5px 15px rgba(29, 204, 112, 0.3);
-            font-family: 'Poppins';
         }
         
         .btn-withdraw:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(29, 204, 112, 0.5); }
@@ -98,6 +97,7 @@
         import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-auth.js";
         import { getDatabase, ref, onValue, update, push, set } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-database.js";
 
+        // Firebase Config
         const firebaseConfig = {
             apiKey: "AIzaSyD-U5wOhyMDsiFf7NB4-twMFNnoWCXVXpE",
             authDomain: "login-52331.firebaseapp.com",
@@ -144,6 +144,7 @@
             btn.innerText = "Processing...";
 
             try {
+                // Deduct balance first to prevent double-spending
                 const newBalance = userBalance - amount;
                 await update(ref(db, 'users/' + user.uid), { balance: newBalance });
 
@@ -172,13 +173,3 @@
     </script>
 </body>
 </html>
-<script>
-  atOptions = {
-    'key' : 'c403443c624d3a0e64d71e89cd90306b',
-    'format' : 'iframe',
-    'height' : 50,
-    'width' : 320,
-    'params' : {}
-  };
-</script>
-<script src="https://www.highperformanceformat.com/c403443c624d3a0e64d71e89cd90306b/invoke.js"></script>
