@@ -13,7 +13,7 @@
             min-height: 100vh; overflow-x: hidden;
         }
 
-        /* হাই-কোয়ালিটি অ্যানিমেটেড ব্যাকগ্রাউন্ড */
+        /* অ্যানিমেটেড ব্যাকগ্রাউন্ড */
         .bg-glow { 
             position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
             background: radial-gradient(circle at 50% 50%, #002b16, #000); 
@@ -26,7 +26,7 @@
         }
         @keyframes moveLight { from { top: -20%; left: -20%; } to { top: 80%; left: 70%; } }
 
-        /* প্রিমিয়াম প্রোফাইল কার্ড */
+        /* প্রোফাইল কার্ড */
         .profile-card {
             background: linear-gradient(45deg, #00ff88, #00ffee, #ff00ff, #00ff88);
             background-size: 400% 400%; animation: gradientBG 5s infinite linear;
@@ -62,7 +62,7 @@
         .balance-card h3 { font-size: 13px; color: #444; text-transform: uppercase; letter-spacing: 3px; font-weight: 800; }
         .balance-amount { font-size: 48px; font-weight: 900; font-family: 'Orbitron'; color: #008f45; margin: 10px 0; }
 
-        /* আইকন গ্রিড */
+        /* গ্রিড আইটেম */
         .icon-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 30px; }
         .icon-item {
             background: rgba(255,255,255,0.1); border: 2px solid #00ff88;
@@ -88,116 +88,12 @@
             box-shadow: 0 5px 15px rgba(255,0,255,0.4);
         }
 
-        /* লগআউট বাটন */
         .logout-btn {
             width: 100%; padding: 20px; background: linear-gradient(90deg, #ff0000, #990000);
             border: none; border-radius: 20px; color: #fff; font-size: 20px;
             font-family: 'Orbitron'; font-weight: 900; margin: 40px 0; cursor: pointer;
             box-shadow: 0 10px 25px rgba(255,0,0,0.5); transition: 0.3s;
         }
-        .logout-btn:hover { background: #ff0000; letter-spacing: 2px; }
-    </style>
-</head>
-<body>
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NST CLUB - Premium Account</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;900&family=Poppins:wght@300;600&display=swap');
-
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            background: #000; color: #fff; font-family: 'Poppins', sans-serif;
-            min-height: 100vh; overflow-x: hidden;
-        }
-
-        /* হাই-কোয়ালিটি অ্যানিমেটেড ব্যাকগ্রাউন্ড */
-        .bg-glow { 
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
-            background: radial-gradient(circle at 50% 50%, #002b16, #000); 
-            z-index: -1; 
-        }
-        .moving-light { 
-            position: absolute; width: 600px; height: 600px; 
-            background: radial-gradient(circle, rgba(0, 255, 136, 0.4), transparent 70%); 
-            border-radius: 50%; animation: moveLight 8s infinite alternate ease-in-out; 
-        }
-        @keyframes moveLight { from { top: -20%; left: -20%; } to { top: 80%; left: 70%; } }
-
-        /* প্রিমিয়াম প্রোফাইল কার্ড */
-        .profile-card {
-            background: linear-gradient(45deg, #00ff88, #00ffee, #ff00ff, #00ff88);
-            background-size: 400% 400%; animation: gradientBG 5s infinite linear;
-            padding: 50px 20px; border-bottom-left-radius: 50px; border-bottom-right-radius: 50px;
-            text-align: center; box-shadow: 0 15px 40px rgba(0, 255, 136, 0.6);
-            position: relative;
-        }
-        @keyframes gradientBG { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
-
-        .profile-img {
-            width: 110px; height: 110px; border-radius: 50%; 
-            border: 5px solid #fff; margin-bottom: 15px;
-            box-shadow: 0 0 30px rgba(255, 255, 255, 0.8);
-            animation: pulse 2s infinite ease-in-out;
-            object-fit: cover;
-        }
-        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.08); } 100% { transform: scale(1); } }
-
-        .user-name { font-family: 'Orbitron'; font-size: 28px; text-shadow: 0 0 15px rgba(0,0,0,0.5); font-weight: 900; }
-        .uid-box { 
-            background: rgba(0,0,0,0.7); padding: 8px 25px; border-radius: 30px; 
-            display: inline-block; margin-top: 10px; font-size: 16px; font-weight: bold; 
-            border: 2px solid rgba(0,255,136,0.5); color: #00ff88;
-        }
-
-        /* ব্যালেন্স কার্ড */
-        .container { padding: 30px; margin-top: -40px; }
-        .balance-card {
-            background: #fff; padding: 30px; border-radius: 25px; color: #000;
-            box-shadow: 0 25px 50px rgba(0,0,0,0.6); text-align: center; 
-            border: 4px solid #00ff88; transition: 0.3s;
-        }
-        .balance-card h3 { font-size: 13px; color: #444; text-transform: uppercase; letter-spacing: 3px; font-weight: 800; }
-        .balance-amount { font-size: 48px; font-weight: 900; font-family: 'Orbitron'; color: #008f45; margin: 10px 0; }
-
-        /* আইকন গ্রিড */
-        .icon-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 30px; }
-        .icon-item {
-            background: rgba(255,255,255,0.1); border: 2px solid #00ff88;
-            padding: 20px; border-radius: 25px; text-align: center; cursor: pointer;
-            transition: 0.4s; backdrop-filter: blur(10px); color: #fff; text-decoration: none;
-        }
-        .icon-item:hover { background: #00ff88; color: #000; transform: translateY(-8px); box-shadow: 0 10px 30px #00ff88; }
-        .icon-item b { font-size: 16px; display: block; margin-top: 8px; }
-
-        /* গিফট বক্স */
-        .gift-box {
-            background: #0d0d0d; border: 2px solid #ff00ff; padding: 25px; border-radius: 30px;
-            margin-top: 30px; text-align: center; box-shadow: 0 0 20px rgba(255,0,255,0.3);
-        }
-        .gift-box h4 { color: #ff00ff; font-family: 'Orbitron'; margin-bottom: 15px; font-size: 14px; }
-        .gift-input {
-            width: 100%; padding: 15px; background: #000; border: 1px solid #ff00ff;
-            border-radius: 12px; color: #fff; text-align: center; font-size: 18px; margin-bottom: 15px; outline: none;
-        }
-        .redeem-btn {
-            width: 100%; padding: 15px; background: linear-gradient(90deg, #ff00ff, #7d00ff);
-            border: none; border-radius: 12px; color: #fff; font-weight: 900; font-family: 'Orbitron'; cursor: pointer;
-            box-shadow: 0 5px 15px rgba(255,0,255,0.4);
-        }
-
-        /* লগআউট বাটন */
-        .logout-btn {
-            width: 100%; padding: 20px; background: linear-gradient(90deg, #ff0000, #990000);
-            border: none; border-radius: 20px; color: #fff; font-size: 20px;
-            font-family: 'Orbitron'; font-weight: 900; margin: 40px 0; cursor: pointer;
-            box-shadow: 0 10px 25px rgba(255,0,0,0.5); transition: 0.3s;
-        }
-        .logout-btn:hover { background: #ff0000; letter-spacing: 2px; }
     </style>
 </head>
 <body>
@@ -239,6 +135,7 @@
         import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-auth.js";
         import { getDatabase, ref, onValue, update, get } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-database.js";
 
+        // Firebase Configuration
         const firebaseConfig = {
             apiKey: "AIzaSyD-U5wOhyMDsiFf7NB4-twMFNnoWCXVXpE",
             authDomain: "login-52331.firebaseapp.com",
@@ -262,22 +159,24 @@
                     if(data) {
                         document.getElementById('userName').innerText = data.name || "Player";
                         
+                        // UID প্রদর্শন
                         if(data.serial){
                             document.getElementById('userUID').innerText = data.serial.toString().padStart(5, '0');
                         } else {
                             document.getElementById('userUID').innerText = user.uid.substring(0,6).toUpperCase();
                         }
 
+                        // ব্যালেন্স আপডেট
                         let currentBalance = data.balance !== undefined ? parseFloat(data.balance) : 0;
                         document.getElementById('balance').innerText = currentBalance.toFixed(2);
 
-                        // --- Welcome Bonus Logic ---
+                        // বোনাস লজিক (Ads ছাড়া)
                         if (data.firstLoginBonus !== true) {
-                            const bonusAmount = 100;
-                            const finalBalance = currentBalance + bonusAmount;
                             update(userRef, { 
-                                balance: finalBalance,
+                                balance: currentBalance + 100,
                                 firstLoginBonus: true 
+                            }).then(() => {
+                                alert("🎉 Congratulations! You received 100 TK Welcome Bonus.");
                             });
                         }
                     }
@@ -287,76 +186,60 @@
             }
         });
 
-        // --- FIXED DYNAMIC GIFT CLAIM LOGIC ---
+        // গিফট ক্লেইম লজিক
         document.getElementById('claimBtn').onclick = async () => {
             const codeInput = document.getElementById('giftInp').value.trim().toUpperCase();
             const user = auth.currentUser;
+            
+            if (!user) return alert("Please login first!");
+            if (codeInput === "") return alert("Please enter a code!");
 
-            if (!codeInput) return alert("Please enter a code!");
-            if (!user) return alert("You are not logged in!");
-
-            const redeemRef = ref(db, 'redeemCodes/' + codeInput);
-            const userRef = ref(db, 'users/' + user.uid);
-
+            const codeRef = ref(db, 'redeemCodes/' + codeInput);
+            
             try {
-                const snap = await get(redeemRef);
-                if (snap.exists()) {
-                    const codeData = snap.val();
-                    
-                    // লিমিট চেক
+                const snapshot = await get(codeRef);
+                
+                if (snapshot.exists()) {
+                    const codeData = snapshot.val();
+                    const userId = user.uid;
+
+                    if (codeData.users && codeData.users[userId]) {
+                        alert("You have already used this code!");
+                        return;
+                    }
+
                     if (codeData.usedCount >= codeData.limit) {
-                        return alert("Limit reached for this code!");
+                        alert("Redeem limit reached for this code!");
+                        return;
                     }
 
-                    // ইউজার আগে ব্যবহার করেছে কি না চেক
-                    if (codeData.users && codeData.users[user.uid]) {
-                        return alert("You have already used this code!");
-                    }
-
-                    // ব্যালেন্স ক্লেইম করা
+                    const userRef = ref(db, 'users/' + userId);
                     const userSnap = await get(userRef);
-                    const currentBalance = userSnap.val().balance || 0;
-                    const bonusAmount = parseFloat(codeData.amount);
+                    const currentBal = userSnap.val().balance || 0;
 
-                    await update(userRef, { balance: currentBalance + bonusAmount });
-
-                    // কোড স্ট্যাটাস আপডেট
-                    const newUsedCount = (codeData.usedCount || 0) + 1;
-                    await update(redeemRef, { 
-                        usedCount: newUsedCount,
-                        [`users/${user.uid}`]: true 
+                    await update(userRef, { balance: currentBal + codeData.amount });
+                    await update(codeRef, {
+                        usedCount: (codeData.usedCount || 0) + 1,
+                        [`users/${userId}`]: true
                     });
 
-                    alert(`🎉 Success! ৳${bonusAmount} Added to your account.`);
+                    alert(`🎉 Success! ৳${codeData.amount} Added.`);
                     document.getElementById('giftInp').value = "";
 
                 } else {
-                    alert("Invalid or Expired Gift Code!");
+                    alert("Invalid Code!");
                 }
             } catch (error) {
-                console.error(error);
                 alert("Something went wrong!");
             }
         };
 
         // লগআউট লজিক
         document.getElementById('logoutBtn').onclick = () => {
-            if(confirm("Are you sure you want to logout?")) {
-                signOut(auth).then(() => {
-                    window.location.href = "login.html";
-                });
-            }
+            signOut(auth).then(() => {
+                window.location.href = "login.html";
+            });
         };
     </script>
 </body>
 </html>
-<script>
-  atOptions = {
-    'key' : 'c403443c624d3a0e64d71e89cd90306b',
-    'format' : 'iframe',
-    'height' : 50,
-    'width' : 320,
-    'params' : {}
-  };
-</script>
-<script src="https://www.highperformanceformat.com/c403443c624d3a0e64d71e89cd90306b/invoke.js"></script>
